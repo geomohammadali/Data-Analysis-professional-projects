@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jan 15 10:08:08 2023
+
+@author: Mohamed Ali
+"""
 import time
 import pandas as pd
 
@@ -19,11 +25,27 @@ def get_filters():
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city_list = ["chicago", "new york city", "washington"]
     city = input("please input city you will work on: ")
-    if city not in city_list:
+
+    while city not in city_list:
         print("currently only following citises are avaliable {chicago, new york city, washington}: " )
         city = input("input city you will work on: ")
-    month = input("input the  month  you are looking for (ex: january) or all: ")
+        
+
+    months_list = ['january', 'february', 'march', 'april', 'may', 'june', 'july',
+              'august', 'september', 'october', 'november', 'december']
+    month = input("input the  month you are looking for (ex: january) or all: ")
+    while month not in months_list:
+        print("currently only following citises are avaliable {chicago, new york city, washington}: " )
+        month = input("input correct month you are looking for: ")
+
+
+    day_list = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     day =input("input the day you are looking for (ex:  monday) or all: ")
+    while day not in day_list:
+        print("currently only following citises are avaliable {chicago, new york city, washington}: " )
+        day = input("input correct day you are looking for: ")
+
+
     print('-'*40)
     return city, month, day
 
@@ -52,7 +74,8 @@ def load_data(city, month, day):
     # filter by month if applicable
     if month != 'all':
         # use the index of the months list to get the corresponding int
-        months = ['january', 'february', 'march', 'april', 'may', 'june']
+        months = ['january', 'february', 'march', 'april', 'may', 'june', 'july',
+                  'august', 'september', 'october', 'november', 'december']
         month = months.index(month) + 1
     
         # filter by month to create the new dataframe
@@ -82,7 +105,7 @@ def time_stats(df):
               'august', 'september', 'october', 'november', 'december']
 
     popular_month_id = df['month'].value_counts().idxmax()
-    popular_month = months[popular_month_id]
+    popular_month = months[popular_month_id - 1]
 
 
     # TO DO: display the most common day of week
