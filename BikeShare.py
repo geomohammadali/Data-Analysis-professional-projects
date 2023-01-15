@@ -28,22 +28,22 @@ def get_filters():
 
     while city not in city_list:
         print("currently only following citises are avaliable {chicago, new york city, washington}: " )
-        city = input("input city you will work on: ")
+        city = input("please input city you will work on or type all: ")
         
 
     months_list = ['january', 'february', 'march', 'april', 'may', 'june', 'july',
-              'august', 'september', 'october', 'november', 'december']
+              'august', 'september', 'october', 'november', 'december', 'all']
     month = input("input the  month you are looking for (ex: january) or all: ")
     while month not in months_list:
-        print("currently only following citises are avaliable {chicago, new york city, washington}: " )
-        month = input("input correct month you are looking for: ")
+        print("you need to type the word with lower case " )
+        month = input("input correct month you are looking for (ex: january) or all: ")
 
 
-    day_list = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    day_list = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday','all']
     day =input("input the day you are looking for (ex:  monday) or all: ")
     while day not in day_list:
-        print("currently only following citises are avaliable {chicago, new york city, washington}: " )
-        day = input("input correct day you are looking for: ")
+        print("you need to type the word with lower case: " )
+        day = input("input correct day you are looking for (ex:  monday) or all: ")
 
 
     print('-'*40)
@@ -184,26 +184,34 @@ def user_stats(df):
     start_time = time.time()
 
     # TO DO: Display counts of user types
-
-    user_types = (df['User Type'].value_counts()).to_string()
+    try:
+        user_types = (df['User Type'].value_counts()).to_string()
+        print("The counts of user types:\n"+user_types)
+    except:
+        print("Input data missing 'User Type' Information ...")
 
 
     # TO DO: Display counts of gender
-    gender_count = (df['Gender'].value_counts()).to_string()
-    
+    try:
+        gender_count = (df['Gender'].value_counts()).to_string()
+        ("\nThe counts of gender: \n"+gender_count)
+    except:
+        print("Input data missing 'Gender' Information ...")
+   
 
 
     # TO DO: Display earliest, most recent, and most common year of birth
-    earliest_bd = df["Birth Year"].min()
-    recent_bd = df["Birth Year"].max()
-    commmon_bd = df["Birth Year"].mode()
+    try:
+        earliest_bd = df["Birth Year"].min()
+        recent_bd = df["Birth Year"].max()
+        commmon_bd = df["Birth Year"].mode()
+        print("\nEarliest Year of birth: ",earliest_bd)
+        print("most recent Year of birth: ",recent_bd)
+        print("most common Year of birth: ",commmon_bd[0])
+    except:
+        print("Input data missing 'Birth Year' Information ...")
     
-    print("The counts of user types:\n"+user_types)
-    print("\nThe counts of gender: \n"+gender_count)
     
-    print("\nEarliest Year of birth: ",earliest_bd)
-    print("most recent Year of birth: ",recent_bd)
-    print("most common Year of birth: ",commmon_bd[0])
     
 
     print("\nThis took %s seconds." % (time.time() - start_time))
