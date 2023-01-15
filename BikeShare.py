@@ -24,7 +24,7 @@ def get_filters():
 
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city_list = ["chicago", "new york city", "washington"]
-    city = input("please input city you will work on: ")
+    city = input("please input city you will work on: ").lower()
 
     while city not in city_list:
         print("currently only following citises are avaliable {chicago, new york city, washington}: " )
@@ -33,17 +33,15 @@ def get_filters():
 
     months_list = ['january', 'february', 'march', 'april', 'may', 'june', 'july',
               'august', 'september', 'october', 'november', 'december', 'all']
-    month = input("input the  month you are looking for (ex: january) or all: ")
+    month = input("input the  month you are looking for (ex: january) or all: ").lower()
     while month not in months_list:
-        print("you need to type the word with lower case " )
-        month = input("input correct month you are looking for (ex: january) or all: ")
+        month = input("input correct month you are looking for (ex: january) or all: ").lower()
 
 
     day_list = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday','all']
-    day =input("input the day you are looking for (ex:  monday) or all: ")
+    day =input("input the day you are looking for (ex:  monday) or all: ").lower()
     while day not in day_list:
-        print("you need to type the word with lower case: " )
-        day = input("input correct day you are looking for (ex:  monday) or all: ")
+        day = input("input correct day you are looking for (ex:  monday) or all: ").lower()
 
 
     print('-'*40)
@@ -87,7 +85,6 @@ def load_data(city, month, day):
         # filter by day of week to create the new dataframe
         df = df[df['day_of_week'] == day.title()]
     
-
     return df
 
 
@@ -218,6 +215,15 @@ def user_stats(df):
     print('-'*40)
 
 
+def display_data(df,city, month, day):
+    view_data = input('\nWould you like to view 5 rows of individual trip data? Enter yes or no\n').lower()
+    start_loc = 0
+    while (view_data != "no"):
+        df = load_data(city, month, day)
+        print(df.iloc[start_loc:start_loc+5])
+        start_loc += 5
+        view_data = input("Do you wish to continue?: ").lower()
+  
 def main():
     while True:
         city, month, day = get_filters()
@@ -227,6 +233,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        display_data(df,city, month, day)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
